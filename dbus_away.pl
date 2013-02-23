@@ -27,7 +27,6 @@ sub set_away {
   foreach my $server (Irssi::servers()) {
     if ( ! $server->{usermode_away} ) {
       $server->command("AWAY -one $reason");
-      Irssi::print("set away on " . $server->{'chatnet'});
     }
   }
 }
@@ -37,7 +36,6 @@ sub set_online {
   foreach my $server (Irssi::servers()) {
     if ( $server->{usermode_away} ) {
       $server->command("AWAY -one");
-      Irssi::print("set online on " . $server->{'chatnet'});
     }
   }
 }
