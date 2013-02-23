@@ -27,8 +27,8 @@ Grab the source:
 curl https://raw.github.com/oz/dbus_away/master/dbus_away.pl > ~/.irssi/scripts/dbus_away.pl
 ```
 
-Optionnaly, symlink it into irssi's `autorun` directory if you want the script
-automatically loaded  when irssi is started:
+Optionally, symlink it into irssi's `autorun` directory if you want the script
+automatically loaded  when irssi starts:
 
 ```
 cd ~/.irssi/scripts/autorun
@@ -38,16 +38,16 @@ ln -s ../dbus_away.pl
 Load the script, from irssi:
 
 ```
-/load dbus_away.pl
+/script load dbus_away.pl
 ```
 
 Configuration
 =============
 
-Only two things are configurable:
+Only two settings are configurable:
 
-  * `poll_interval` sets how often we poll DBus (in seconds). Default is `5`.
-  * `away_message` change the default away message, which is "AFK".
+  * `poll_interval` sets how often we poll DBus (in seconds). Defaults to 5.
+  * `away_message` changes the default away message, which is "AFK".
 
 Author and License
 ==================
