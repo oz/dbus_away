@@ -56,5 +56,5 @@ This script is licensed under the GPL v3.
 
 Blame:
 
-  * Arnaud Berthomier - I did Perl a long time away when you were not born.
+  * Arnaud Berthomier - I did Perl a long time ago when you were not born.
     Now, it's quite rusty. Sorry. :)
