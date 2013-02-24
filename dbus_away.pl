@@ -28,43 +28,37 @@ sub set_away {
   my ($reason) = @_;
 
   foreach my $server (Irssi::servers()) {
-    if ( ! $server->{usermode_away} ) {
+    if ( ! $server->{'usermode_away'} ) {
       $server->command("AWAY -one $reason");
+      $plugin_can_change_status = 1;
     }
   }
 }
 
 # Set online on all servers.
 sub set_online {
+  $plugin_can_change_status = 0;
   foreach my $server (Irssi::servers()) {
-    if ( $server->{usermode_away} ) {
+    if ( $server->{'usermode_away'} ) {
       $server->command("AWAY -one");
     }
   }
-}
-
-# Poll DBus to get screensaver status.
-sub get_screensaver_status {
-  my ($screensaver) = @_;
-
-  return $screensaver->GetActive();
 }
 
 # Callback triggered by Irssi::timeout_add, check screensaver state, and set
 # away or online accordingly.
 sub poll_screensaver_status {
   my ($screensaver) = @_;
-  my $active = get_screensaver_status($screensaver);
 
-  if ( $active ) {
+  if ( $screensaver->GetActive() ) {
     set_away(Irssi::settings_get_str('away_message'));
   } else {
-    set_online();
+    set_online() if ( $plugin_can_change_status );
   }
 }
 
 # Net::DBus initialization stuff.
-sub initialize_screensaver {
+sub get_dbus_screensaver {
   my $bus = Net::DBus->session;
   return unless $bus;
 
@@ -77,8 +71,8 @@ sub initialize_screensaver {
   return $obj;
 }
 
-my $screensaver = initialize_screensaver();
-if (!$screensaver) {
+my $screensaver = get_dbus_screensaver();
+if ( ! $screensaver ) {
   Irssi::print("dbus_away error: can't read screensaver status. Deactivating.");
 } else {
   Irssi::timeout_add(1000 * Irssi::settings_get_int('poll_interval'),
