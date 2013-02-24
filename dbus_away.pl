@@ -4,7 +4,7 @@ use warnings;
 use Net::DBus;
 
 use Irssi;
-use vars qw($VERSION %IRSSI);
+our($VERSION, %IRSSI, $plugin_can_change_status);
 
 $VERSION = "0.1";
 %IRSSI = (
@@ -15,6 +15,9 @@ $VERSION = "0.1";
   license     => 'GPL v3',
   url         => 'https://github.com/oz/dbus_away'
 );
+
+# Wether the plugin can switch between away/online status.
+$plugin_can_change_status = 0;
 
 Irssi::settings_add_str('dbus_away', 'away_message', 'AFK');
 Irssi::settings_add_int('dbus_away', 'poll_interval', 5);
